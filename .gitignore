@@ -83,3 +83,7 @@ env/
 # Build directories
 build/
 dist/
+
+# Local tokens
+.env
+.envrc
