@@ -21,7 +21,9 @@ data_files = [
     if data_file.is_file()
 ]
 
-package_data = {"MulensModel": sorted(data_files)}
+package_name = os.environ.get("MULENSMODEL_PACKAGE_NAME", "MulensModel")
+
+package_data = {package_name: sorted(data_files)}
 
 version = "unknown"
 with Path(SOURCE_PATH / "MulensModel" / "version.py").open() as in_put:
@@ -45,8 +47,6 @@ ext_VBBL = Extension(
     "MulensModel.VBBL", **kwargs,
     sources=[
         str(f.relative_to(PROJECT_PATH)) for f in source_VBBL.glob("*.cpp")])
-
-package_name = os.environ.get("MULENSMODEL_PACKAGE_NAME", "MulensModel")
 
 setup(
     name=package_name,
