@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 import platform
 
@@ -45,8 +46,10 @@ ext_VBBL = Extension(
     sources=[
         str(f.relative_to(PROJECT_PATH)) for f in source_VBBL.glob("*.cpp")])
 
+package_name = os.environ.get("MULENSMODEL_PACKAGE_NAME", "MulensModel")
+
 setup(
-    name='MulensModel',
+    name=package_name,
     version=version,
     url='https://github.com/rpoleski/MulensModel',
     project_urls={

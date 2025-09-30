@@ -21,6 +21,20 @@ An important aspect of adding new code is writing tests that can be run in autom
 
 As of Nov 2022, we have regular hack sessions (just 2h each week) to work on MulensModel. Contact us if you are interested in joining.
 
+### Publishing to TestPyPI
+
+If you need to exercise the release workflow against TestPyPI without affecting the real
+`MulensModel` project name, set the environment variable `MULENSMODEL_PACKAGE_NAME`
+before running the build or upload commands. For example:
+
+```bash
+MULENSMODEL_PACKAGE_NAME=MulensModel-test python -m build
+MULENSMODEL_PACKAGE_NAME=MulensModel-test twine upload --repository testpypi dist/*
+```
+
+This overrides the package name just for that session; the production release should be run
+without the variable so it defaults back to `MulensModel`.
+
 
 Thanks!
 
