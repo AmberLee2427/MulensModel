@@ -78,6 +78,7 @@ coverage.xml
 .venv/
 venv/
 env/
+.ci-py310
 
 # Build directories
 build/
