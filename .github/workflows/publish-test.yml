@@ -3,17 +3,13 @@ name: Upload Python Package to TestPyPI
 on:
   push:
 
-env:
-  TEST_PACKAGE_NAME: MulensModel-test
-  TEST_PYPI_URL: https://test.pypi.org/legacy/
-
 jobs:
   build_wheels:
     name: ${{ matrix.os }} ${{ matrix.cibw_archs }} ${{ matrix.cibw_build }} (Test)
     runs-on: ${{ matrix.os }}
     env:
-      MULENSMODEL_PACKAGE_NAME: ${{ env.TEST_PACKAGE_NAME }}
-      CIBW_ENVIRONMENT: MULENSMODEL_PACKAGE_NAME=${{ env.TEST_PACKAGE_NAME }}
+      MULENSMODEL_PACKAGE_NAME: MulensModel-test
+      CIBW_ENVIRONMENT: MULENSMODEL_PACKAGE_NAME=MulensModel-test
     strategy:
       fail-fast: false
       matrix:
@@ -45,7 +41,7 @@ jobs:
     name: Build sdist (Test)
     runs-on: ubuntu-latest
     env:
-      MULENSMODEL_PACKAGE_NAME: ${{ env.TEST_PACKAGE_NAME }}
+      MULENSMODEL_PACKAGE_NAME: MulensModel-test
 
     steps:
       - uses: actions/checkout@v4
@@ -73,9 +69,6 @@ jobs:
     name: Publish to TestPyPI
     runs-on: ubuntu-latest
     needs: [build_wheels, build_source]
-    env:
-      TEST_PACKAGE_NAME: ${{ env.TEST_PACKAGE_NAME }}
-      TEST_PYPI_URL: ${{ env.TEST_PYPI_URL }}
 
     steps:
       - uses: actions/checkout@v4
@@ -92,5 +85,5 @@ jobs:
         with:
           user: __token__
           password: ${{ secrets.TEST_PYPI_API_TOKEN }}
-          repository-url: ${{ env.TEST_PYPI_URL }}
+          repository-url: https://test.pypi.org/legacy/
           packages-dir: dist
