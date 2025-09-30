@@ -5,7 +5,7 @@ on:
 
 jobs:
   build_wheels:
-    name: ${{ matrix.os }} (Test)
+    name: ${{ matrix.os }} ${{ matrix.cibw_build }} (Test)
     runs-on: ${{ matrix.os }}
     env:
       MULENSMODEL_PACKAGE_NAME: MulensModel-test
@@ -16,10 +16,28 @@ jobs:
       matrix:
         include:
           - os: macos-latest
-            cibw_build: "cp38-* cp39-* cp310-* cp311-*"
+            cibw_build: "cp38-*"
+            cibw_skip: "pp*"
+          - os: macos-latest
+            cibw_build: "cp39-*"
+            cibw_skip: "pp*"
+          - os: macos-latest
+            cibw_build: "cp310-*"
+            cibw_skip: "pp*"
+          - os: macos-latest
+            cibw_build: "cp311-*"
             cibw_skip: "pp*"
           - os: ubuntu-latest
-            cibw_build: "cp38-* cp39-* cp310-* cp311-*"
+            cibw_build: "cp38-*"
+            cibw_skip: "pp* *-musllinux*"
+          - os: ubuntu-latest
+            cibw_build: "cp39-*"
+            cibw_skip: "pp* *-musllinux*"
+          - os: ubuntu-latest
+            cibw_build: "cp310-*"
+            cibw_skip: "pp* *-musllinux*"
+          - os: ubuntu-latest
+            cibw_build: "cp311-*"
             cibw_skip: "pp* *-musllinux*"
 
     steps:
