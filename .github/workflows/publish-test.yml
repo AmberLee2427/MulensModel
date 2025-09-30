@@ -10,11 +10,12 @@ jobs:
     env:
       MULENSMODEL_PACKAGE_NAME: MulensModel-test
       CIBW_ENVIRONMENT: MULENSMODEL_PACKAGE_NAME=MulensModel-test
+      CIBW_BUILD_VERBOSITY: "1"
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest]
-        cibw_build: [cp38-*, cp39-*, cp310-*, cp311-*]
+        cibw_build: ['cp38-*', 'cp39-*', 'cp310-*', 'cp311-*']
         cibw_skip: ['pp*', '*-manylinux*']
 
     steps:
