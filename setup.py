@@ -11,12 +11,16 @@ file_required = PROJECT_PATH / "requirements.txt"
 with file_required.open() as file_:
     install_requires = file_.read().splitlines()
 
-# Include data files in the package
-package_data = {}
-for data_file in DATA_PATH.rglob("*"):
-    if data_file.is_file():
-        relative_path = data_file.relative_to(DATA_PATH)
-        package_data["MulensModel"] = [f"data/{relative_path}"]
+# Include every file from the top-level data/ directory inside the wheel.
+# rpoleski prefers to keep the canonical data/ tree at the repository root, so
+# we enumerate the files here and expose them under MulensModel/data/.
+data_files = [
+    str(Path("data") / data_file.relative_to(DATA_PATH))
+    for data_file in DATA_PATH.rglob("*")
+    if data_file.is_file()
+]
+
+package_data = {"MulensModel": sorted(data_files)}
 
 version = "unknown"
 with Path(SOURCE_PATH / "MulensModel" / "version.py").open() as in_put:
