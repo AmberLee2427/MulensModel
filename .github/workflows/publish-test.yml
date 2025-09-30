@@ -15,7 +15,7 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest]
         cibw_build: [cp38-*, cp39-*, cp310-*, cp311-*]
-        cibw_skip: [pp*, *-manylinux*]
+        cibw_skip: ['pp*', '*-manylinux*']
 
     steps:
       - uses: actions/checkout@v4
